@@ -1,29 +1,47 @@
 <template>
-  <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </div>
-    <router-view/>
-  </div>
+  <main class="wrapper">
+    <navigation />
+    <router-view />
+  </main>
 </template>
 
-<style lang="scss">
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
-#nav {
-  padding: 30px;
-  a {
-    font-weight: bold;
-    color: #2c3e50;
-    &.router-link-exact-active {
-      color: #42b983;
+<script>
+  import Navigation from './components/Navigation';
+
+  export default {
+    name: 'app',
+    components: {
+      Navigation
+    },
+
+    data() {
+      return {
+        user: this.$user
+      };
+    },
+
+    mounted() {
+      if ('geolocation' in navigator) {
+        navigator.geolocation.getCurrentPosition(position => {
+          this.$user.latitude = position.coords.latitude;
+          this.$user.longitude = position.coords.longitude;
+          console.log(position.coords.latitude + ' ' + position.coords.longitude);
+        });
+      } else {
+        alert('/* geolocation IS NOT available */');
+      }
+    },
+
+    methods: {
+
     }
   }
-}
+</script>
+
+<style lang="scss">
+  @import '~vuetify/dist/vuetify.min.css';
+
+  body {
+    font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
+  }
 </style>
