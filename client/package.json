@@ -15,8 +15,10 @@
     "register-service-worker": "^1.6.2",
     "socket.io-client": "^2.2.0",
     "vue": "^2.6.6",
+    "vue-axios": "^2.1.4",
     "vue-router": "^3.0.1",
-    "vuetify": "^1.5.7"
+    "vuetify": "^1.5.7",
+    "vuex": "^3.1.0"
   },
   "devDependencies": {
     "@babel/preset-env": "^7.4.2",

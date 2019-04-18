@@ -6,7 +6,11 @@
 
 <script>
   export default {
-    name: 'app'
+    name: 'app',
+    beforeCreate() {
+      this.$store.dispatch('loadCabins');
+      this.$store.dispatch('loadHelpers');
+    }
   }
 </script>
 
