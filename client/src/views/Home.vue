@@ -108,6 +108,10 @@
             if (error) throw error;
             me.map.addImage('cabin-taken', image);
           });
+          me.map.loadImage('img/helper.png', (error, image) => {
+            if (error) throw error;
+            me.map.addImage('helper', image);
+          });
           me.map.loadImage('img/pedestrian.png', (error, image) => {
             if (error) throw error;
             me.map.addImage('marker', image);
@@ -133,6 +137,7 @@
               }
             });
             me.setCabins();
+            me.setHelpers();
           });
         });
       },
@@ -148,10 +153,12 @@
         const me = this;
 
         me.cabins.forEach(cabin => {
-          console.log(cabin);
           const features = [];
           const point = {
             type: 'Feature',
+            properties: {
+              description: `${ cabin.name }`
+            },
             geometry: {
               type: 'Point',
               coordinates: [cabin.location.longitude, cabin.location.latitude]
@@ -176,6 +183,73 @@
               'icon-size': 0.35
             }
           };
+
+          me.map.on('click', cabin.name, function (e) {
+            const coordinates = e.features[0].geometry.coordinates.slice();
+            const description = e.features[0].properties.description;
+
+            while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
+              coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
+            }
+
+            new me.mbgl.Popup()
+              .setLngLat(coordinates)
+              .setHTML(description)
+              .addTo(me.map);
+          });
+
+          me.map.addLayer(geojson);
+        });
+      },
+
+      setHelpers() {
+        const me = this;
+
+        me.helpers.forEach(helper => {
+          const features = [];
+          const point = {
+            type: 'Feature',
+            properties: {
+              description: `${ helper.username }`
+            },
+            geometry: {
+              type: 'Point',
+              coordinates: [helper.location.longitude, helper.location.latitude]
+            }
+          };
+
+          features.push(point);
+
+          const geojson = {
+            id: helper.username,
+            type: 'symbol',
+            source: {
+              type: 'geojson',
+              data: {
+                type: 'FeatureCollection',
+                features: features
+              }
+            },
+            layout: {
+              'icon-image': 'helper',
+              'icon-allow-overlap': true,
+              'icon-size': 0.35
+            }
+          };
+
+          me.map.on('click', helper.username, function (e) {
+            const coordinates = e.features[0].geometry.coordinates.slice();
+            const description = e.features[0].properties.description;
+
+            while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
+              coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
+            }
+
+            new me.mbgl.Popup()
+              .setLngLat(coordinates)
+              .setHTML(description)
+              .addTo(me.map);
+          });
 
           me.map.addLayer(geojson);
         });

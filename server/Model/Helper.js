@@ -5,7 +5,9 @@ const HelperSchema = new mongoose.Schema({
   firstname: String,
   lastname: String,
   isHelping: Object,
-  location: Object
+  location: Object,
+  password: String,
+  username: String
 }, { collection: 'helper' });
 
 class HelperClass {
@@ -47,6 +49,14 @@ class HelperClass {
 
   getLongitude() {
     return this.location.longitude;
+  }
+
+  getPassword() {
+    return this.password;
+  }
+
+  getUsername() {
+    return this.username;
   }
 }
 
