@@ -1,4 +1,7 @@
 module.exports = {
+  baseUrl: process.env.NODE_ENV === 'production'
+    ? './' // prod
+    : '/', // dev
   configureWebpack: {
     devServer: {
       host: '0.0.0.0',
@@ -9,5 +12,7 @@ module.exports = {
         poll: true
       }
     }
-  }
+  },
+  outputDir: 'dist',
+  productionSourceMap: false
 };
