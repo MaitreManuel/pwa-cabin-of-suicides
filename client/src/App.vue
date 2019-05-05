@@ -10,6 +10,7 @@
     beforeCreate() {
       this.$store.dispatch('loadCabins');
       this.$store.dispatch('loadHelpers');
+      this.$store.dispatch('loadLang');
     }
   }
 </script>

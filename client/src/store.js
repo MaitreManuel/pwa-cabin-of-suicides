@@ -9,7 +9,8 @@ Vue.use(VueAxios, axios);
 const store = new Vuex.Store({
   state: {
     cabins: null,
-    helpers: null
+    helpers: null,
+    lang: null
   },
 
   actions: {
@@ -35,6 +36,13 @@ const store = new Vuex.Store({
           commit('SET_HELPERS', helpers);
         })
       ;
+    },
+
+    loadLang({ commit }) {
+      const lang = localStorage.getItem('lang') ? localStorage.getItem('lang') : 'fr';
+
+      localStorage.setItem('lang', lang);
+      commit('SET_LANG', lang);
     }
   },
 
@@ -45,6 +53,10 @@ const store = new Vuex.Store({
 
     SET_HELPERS(state, helpers) {
       state.helpers = helpers;
+    },
+
+    SET_LANG(state, lang) {
+      state.lang = lang;
     }
   }
 });

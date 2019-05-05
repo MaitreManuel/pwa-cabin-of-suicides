@@ -59,6 +59,10 @@
     },
 
     methods: {
+      drawPath() {
+        console.log('et zééééé parti');
+      },
+
       focusLocation() {
         document.querySelector('.mapboxgl-ctrl-geolocate').click();
       },
@@ -136,8 +140,17 @@
                 'icon-size': 0.20
               }
             });
-            me.setCabins();
-            me.setHelpers();
+            if (me.map.isStyleLoaded()) {
+              me.$nextTick(() => {
+                me.setCabins();
+                me.setHelpers();
+              });
+            } else {
+              me.map.once('styledata', () => {
+                me.setCabins();
+                me.setHelpers();
+              });
+            }
           });
         });
       },
@@ -157,7 +170,10 @@
           const point = {
             type: 'Feature',
             properties: {
-              description: `${ cabin.name }`
+              description: `
+                <h2>${ cabin.name }</h2>
+                <button class="go-to" onclick="${ me.drawPath }">${ me.$t('message.hello', { msg: 'hello' }) }</button>
+              `
             },
             geometry: {
               type: 'Point',
@@ -195,7 +211,10 @@
             new me.mbgl.Popup()
               .setLngLat(coordinates)
               .setHTML(description)
-              .addTo(me.map);
+              .addTo(me.map)
+            ;
+
+            me.map.flyTo({ center: e.features[0].geometry.coordinates, zoom: 17 });
           });
 
           me.map.addLayer(geojson);
@@ -214,7 +233,7 @@
             },
             geometry: {
               type: 'Point',
-              coordinates: [helper.location.longitude, helper.location.latitude]
+              coordinates: [helper.location.longitude, helper.location.latitude],
             }
           };
 
@@ -248,7 +267,9 @@
             new me.mbgl.Popup()
               .setLngLat(coordinates)
               .setHTML(description)
-              .addTo(me.map);
+              .addTo(me.map)
+            ;
+            me.map.flyTo({ center: e.features[0].geometry.coordinates, zoom: 17 });
           });
 
           me.map.addLayer(geojson);
@@ -283,5 +304,22 @@
 <style lang="scss">
   .mapboxgl-ctrl {
     opacity: 0;
+  }
+
+  .mapboxgl-popup-content {
+    padding: 15px 10px !important;
+    text-align: center;
+
+    .go-to {
+      background: #212121;
+      color: white;
+      margin-top: 15px;
+      padding: 5px 10px;
+    }
+
+    .mapboxgl-popup-close-button {
+      font-size: 18px;
+      width: 20px;
+    }
   }
 </style>

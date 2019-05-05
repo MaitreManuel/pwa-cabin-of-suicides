@@ -6,9 +6,10 @@ import 'material-design-icons-iconfont/dist/material-design-icons.css';
 import 'vuetify/dist/vuetify.min.css';
 
 import App from './App.vue';
-import router from './router';
+import i18n from './plugins/i18n';
+import router from './plugins/router';
 import store from './store';
-import './registerServiceWorker';
+import './plugins/registerServiceWorker';
 
 Vue.config.productionTip = false;
 
@@ -32,6 +33,7 @@ Vue.use(Vuetify, {
 });
 
 new Vue({
+  i18n,
   router,
   store,
   render: h => h(App)

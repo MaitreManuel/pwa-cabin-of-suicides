@@ -1,0 +1,5 @@
+{
+  "scripts": {
+    "deploy": "npm run build --prefix client/ && git add -A && git commit -nm ':rocket: deploy' && git push && git subtree push --prefix client/dist origin gh-pages"
+  }
+}

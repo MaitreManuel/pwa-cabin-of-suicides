@@ -35,7 +35,7 @@
           <v-list-tile
             v-for="item in items"
             :key="item.title"
-            @click="console.log('caca')"
+            @click="() => goTo(item.page, {}, () => drawer = !drawer)"
           >
             <v-list-tile-action>
               <v-icon>{{ item.icon }}</v-icon>
@@ -56,12 +56,26 @@
     name: 'navigation',
     data () {
       return {
-        drawer: null,
+        drawer: false,
         items: [
-          { title: 'Home', icon: 'dashboard' },
-          { title: 'About', icon: 'question_answer' }
+          { title: 'Home', icon: 'dashboard', page: 'login' },
+          { title: 'Accueil', icon: 'dashboard', page: 'home' },
+          { title: 'About', icon: 'question_answer', page: 'about' }
         ],
         right: null
+      }
+    },
+
+    methods: {
+      goTo(page, params, func) {
+        func();
+        this.$router.push({ name: page, params: params});
+      },
+
+      switchLang() {
+        if (localStorage.getItem('lang')) {
+          localStorage.setItem('lang', 'fr')
+        }
       }
     }
   }
