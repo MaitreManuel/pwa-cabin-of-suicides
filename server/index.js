@@ -35,5 +35,6 @@ app.get('/', (req, res) => {
 
 require('./Route/Cabin')(app);
 require('./Route/Helper')(app);
+require('./Route/Map')(app);
 
 module.exports.app = app;

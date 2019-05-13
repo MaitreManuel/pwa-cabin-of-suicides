@@ -15,7 +15,7 @@ const store = new Vuex.Store({
 
   actions: {
     loadCabins({ commit }) {
-      axios({
+      Vue.axios({
         method: 'GET',
         url: `${ this._vm.$baseUrl }/cabin`
       })
@@ -27,7 +27,7 @@ const store = new Vuex.Store({
     },
 
     loadHelpers({ commit }) {
-      axios({
+      Vue.axios({
         method: 'GET',
         url: `${ this._vm.$baseUrl }/helper`
       })

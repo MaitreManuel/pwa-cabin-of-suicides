@@ -48,6 +48,14 @@
       }
     },
 
+    watch: {
+      ready() {
+        this.setCabins();
+        this.setHelpers();
+        this.setOwn();
+      }
+    },
+
     beforeMount() {
       this.setLocation();
     },
@@ -59,8 +67,17 @@
     },
 
     methods: {
-      drawPath() {
-        console.log('et zééééé parti');
+      drawPath(toGoPosition) {
+        const me = this;
+
+        me.axios({
+          method: 'GET',
+          url: me.$direction({ latitude: me.latitude, longitude: me.longitude }, toGoPosition)
+        })
+          .then(result => {
+            console.log(result);
+          })
+        ;
       },
 
       focusLocation() {
@@ -102,8 +119,6 @@
         me.map.addControl(GeolocateControl);
 
         me.map.on('load', () => {
-          me.mapReady = me.map.loaded();
-
           me.map.loadImage('img/cabin.png', (error, image) => {
             if (error) throw error;
             me.map.addImage('cabin', image);
@@ -119,40 +134,144 @@
           me.map.loadImage('img/pedestrian.png', (error, image) => {
             if (error) throw error;
             me.map.addImage('marker', image);
-            me.map.addLayer({
-              id: 'marker',
-              type: 'symbol',
-              source: {
-                type: 'geojson',
-                data: {
-                  type: 'FeatureCollection',
-                  features: [{
-                    type: 'Feature',
-                    geometry: {
-                      type: 'Point',
-                      coordinates: [me.longitude, me.latitude]
-                    }
-                  }]
-                }
-              },
-              layout: {
-                'icon-image': 'marker',
-                'icon-size': 0.20
-              }
-            });
+
             if (me.map.isStyleLoaded()) {
               me.$nextTick(() => {
-                me.setCabins();
-                me.setHelpers();
+                me.mapReady = true;
               });
             } else {
               me.map.once('styledata', () => {
-                me.setCabins();
-                me.setHelpers();
+                me.mapReady = true;
               });
             }
           });
         });
+      },
+
+      setCabins() {
+        const me = this;
+
+        if (me.cabins) {
+          me.cabins.forEach(cabin => {
+            if (!me.map.getLayer(cabin.name)) {
+              const features = [];
+              const point = {
+                type: 'Feature',
+                properties: {
+                  description: `
+                <h2>${ cabin.name }</h2>
+                <button id="btn-${ cabin.name }" class="go-to">${ me.$t('message.hello', { msg: 'hello' }) }</button>
+              `
+                },
+                geometry: {
+                  type: 'Point',
+                  coordinates: [cabin.location.longitude, cabin.location.latitude]
+                }
+              };
+
+              features.push(point);
+
+              const geojson = {
+                id: cabin.name,
+                type: 'symbol',
+                source: {
+                  type: 'geojson',
+                  data: {
+                    type: 'FeatureCollection',
+                    features: features
+                  }
+                },
+                layout: {
+                  'icon-image': cabin.isTaken.status ? 'cabin-taken' : 'cabin',
+                  'icon-allow-overlap': true,
+                  'icon-size': 0.3
+                }
+              };
+
+              me.map.on('click', cabin.name, function (e) {
+                const coordinates = e.features[0].geometry.coordinates.slice();
+                const description = e.features[0].properties.description;
+
+                while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
+                  coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
+                }
+
+                new me.mbgl.Popup()
+                  .setLngLat(coordinates)
+                  .setHTML(description)
+                  .addTo(me.map)
+                ;
+
+                document.querySelector(`#btn-${ cabin.name }`).addEventListener('click', () => {
+                  me.drawPath(cabin.location);
+                });
+
+                me.map.flyTo({ center: e.features[0].geometry.coordinates, zoom: 17 });
+              });
+
+              me.map.addLayer(geojson);
+            }
+          });
+        }
+      },
+
+      setHelpers() {
+        const me = this;
+
+        if (me.helpers) {
+          me.helpers.forEach(helper => {
+            if (!me.map.getLayer(helper.username)) {
+              const features = [];
+              const point = {
+                type: 'Feature',
+                properties: {
+                  description: `${ helper.username }`
+                },
+                geometry: {
+                  type: 'Point',
+                  coordinates: [helper.location.longitude, helper.location.latitude],
+                }
+              };
+
+              features.push(point);
+
+              const geojson = {
+                id: helper.username,
+                type: 'symbol',
+                source: {
+                  type: 'geojson',
+                  data: {
+                    type: 'FeatureCollection',
+                    features: features
+                  }
+                },
+                layout: {
+                  'icon-image': 'helper',
+                  'icon-allow-overlap': true,
+                  'icon-size': 0.3
+                }
+              };
+
+              me.map.on('click', helper.username, function (e) {
+                const coordinates = e.features[0].geometry.coordinates.slice();
+                const description = e.features[0].properties.description;
+
+                while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
+                  coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
+                }
+
+                new me.mbgl.Popup()
+                  .setLngLat(coordinates)
+                  .setHTML(description)
+                  .addTo(me.map)
+                ;
+                me.map.flyTo({ center: e.features[0].geometry.coordinates, zoom: 17 });
+              });
+
+              me.map.addLayer(geojson);
+            }
+          });
+        }
       },
 
       setLocation() {
@@ -162,118 +281,58 @@
         });
       },
 
-      setCabins() {
+      setOwn() {
         const me = this;
 
-        me.cabins.forEach(cabin => {
-          const features = [];
-          const point = {
-            type: 'Feature',
-            properties: {
-              description: `
-                <h2>${ cabin.name }</h2>
-                <button class="go-to" onclick="${ me.drawPath }">${ me.$t('message.hello', { msg: 'hello' }) }</button>
-              `
-            },
-            geometry: {
-              type: 'Point',
-              coordinates: [cabin.location.longitude, cabin.location.latitude]
-            }
-          };
+        me.map.on('click', 'marker', function (e) {
+          const coordinates = e.features[0].geometry.coordinates.slice();
+          const description = e.features[0].properties.description;
 
-          features.push(point);
+          while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
+            coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
+          }
 
-          const geojson = {
-            id: cabin.name,
-            type: 'symbol',
-            source: {
-              type: 'geojson',
-              data: {
-                type: 'FeatureCollection',
-                features: features
-              }
-            },
-            layout: {
-              'icon-image': cabin.isTaken.status ? 'cabin-taken' : 'cabin',
-              'icon-allow-overlap': true,
-              'icon-size': 0.35
-            }
-          };
-
-          me.map.on('click', cabin.name, function (e) {
-            const coordinates = e.features[0].geometry.coordinates.slice();
-            const description = e.features[0].properties.description;
-
-            while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
-              coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
-            }
-
-            new me.mbgl.Popup()
-              .setLngLat(coordinates)
-              .setHTML(description)
-              .addTo(me.map)
-            ;
-
-            me.map.flyTo({ center: e.features[0].geometry.coordinates, zoom: 17 });
-          });
-
-          me.map.addLayer(geojson);
+          new me.mbgl.Popup()
+            .setLngLat(coordinates)
+            .setHTML(description)
+            .addTo(me.map)
+          ;
+          me.map.flyTo({ center: e.features[0].geometry.coordinates, zoom: 17 });
         });
-      },
 
-      setHelpers() {
-        const me = this;
-
-        me.helpers.forEach(helper => {
-          const features = [];
-          const point = {
-            type: 'Feature',
-            properties: {
-              description: `${ helper.username }`
-            },
-            geometry: {
-              type: 'Point',
-              coordinates: [helper.location.longitude, helper.location.latitude],
+        me.map.addLayer({
+          id: 'marker',
+          type: 'symbol',
+          source: {
+            type: 'geojson',
+            data: {
+              type: 'FeatureCollection',
+              features: [{
+                type: 'Feature',
+                properties: {
+                  description: 'Vous êtes ici.'
+                },
+                geometry: {
+                  type: 'Point',
+                  coordinates: [me.longitude, me.latitude]
+                }
+              }]
             }
-          };
-
-          features.push(point);
-
-          const geojson = {
-            id: helper.username,
-            type: 'symbol',
-            source: {
-              type: 'geojson',
-              data: {
-                type: 'FeatureCollection',
-                features: features
-              }
-            },
-            layout: {
-              'icon-image': 'helper',
-              'icon-allow-overlap': true,
-              'icon-size': 0.35
-            }
-          };
-
-          me.map.on('click', helper.username, function (e) {
-            const coordinates = e.features[0].geometry.coordinates.slice();
-            const description = e.features[0].properties.description;
-
-            while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
-              coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
-            }
-
-            new me.mbgl.Popup()
-              .setLngLat(coordinates)
-              .setHTML(description)
-              .addTo(me.map)
-            ;
-            me.map.flyTo({ center: e.features[0].geometry.coordinates, zoom: 17 });
-          });
-
-          me.map.addLayer(geojson);
+          },
+          layout: {
+            'icon-image': 'marker',
+            'icon-size': 0.3
+          }
         });
+
+        me.axios({
+          method: 'GET',
+          url: me.$reverseGeocoding({ latitude: me.latitude, longitude: me.longitude })
+        })
+          .then(result => {
+            console.log(result);
+          })
+        ;
       }
     }
   }
