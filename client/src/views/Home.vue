@@ -326,8 +326,13 @@
         });
 
         me.axios({
-          method: 'GET',
-          url: me.$reverseGeocoding({ latitude: me.latitude, longitude: me.longitude })
+          method: 'POST',
+          url: `${ me.$baseUrl }/map/reverse-geocoding`,
+          data: {
+            locations: JSON.stringify([[me.longitude, me.latitude]]),
+            token: me.$accessToken,
+            url: JSON.stringify(me.$splitUrlMapBox)
+          }
         })
           .then(result => {
             console.log(result);

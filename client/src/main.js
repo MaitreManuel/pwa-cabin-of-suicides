@@ -14,15 +14,10 @@ import './plugins/registerServiceWorker';
 Vue.config.productionTip = false;
 
 Vue.prototype.$accessToken = 'pk.eyJ1IjoibWFpdHJlbWFudWVsIiwiYSI6ImNqdWUwOXB5czByOWg0NHA5emhzajg0MXoifQ.wmKWlpczXU1SVDUCA8GMbA';
-// Vue.prototype.$baseUrl = process.env.NODE_ENV === 'development' ? 'http://localhost:5000' : 'https://cabin-of-suicides.herokuapp.com';
 Vue.prototype.$baseUrl = 'https://cabin-of-suicides.herokuapp.com';
 Vue.prototype.$direction = (ownPosition, toGoPosition) => {
   return `https://api.mapbox.com/directions/v5/mapbox/walking/${ ownPosition.longitude }%2C${ ownPosition.latitude }%3B${ toGoPosition.longitude }%2C${ toGoPosition.latitude }.json?access_token=${ Vue.prototype.$accessToken }&overview=full&geometries=geojson`
 };
-Vue.prototype.$reverseGeocoding = position => {
-  return `https://api.mapbox.com/geocoding/v5/mapbox.places/${ position.longitude },${ position.latitude }.json?access_token=${ Vue.prototype.$accessToken }`;
-};
-const m = ['https://api.mapbox.com/geocoding/v5/mapbox.places/',',','.json?access_token='];
 Vue.prototype.$getLocation = cb => {
   if ('geolocation' in navigator) {
     navigator.geolocation.getCurrentPosition(position => {
@@ -32,6 +27,7 @@ Vue.prototype.$getLocation = cb => {
     alert('/* geolocation IS NOT available */');
   }
 };
+Vue.prototype.$splitUrlMapBox = ["https://api.mapbox.com/geocoding/v5/mapbox.places/",",",".json?access_token="];
 
 Vue.use(Vuetify, {
   iconfont: 'md'
