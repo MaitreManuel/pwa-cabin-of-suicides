@@ -17,6 +17,6 @@
 
 <style lang="scss">
   body {
-    font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
+    font-family: Arial, 'Helvetica Neue', Helvetica, sans-serif;
   }
 </style>

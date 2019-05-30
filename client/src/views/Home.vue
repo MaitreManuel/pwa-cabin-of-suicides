@@ -75,7 +75,22 @@
           url: me.$direction({ latitude: me.latitude, longitude: me.longitude }, toGoPosition)
         })
           .then(result => {
-            console.log(result);
+            const coordinates = result.data.routes[0].geometry.coordinates;
+
+            console.log(coordinates);
+            // me.axios({
+            //   method: 'POST',
+            //   url: `${ me.$baseUrl }/map/reverse-geocoding`,
+            //   data: {
+            //     locations: JSON.stringify([[me.longitude, me.latitude]]),
+            //     token: me.$accessToken,
+            //     url: JSON.stringify(me.$splitUrlMapBox)
+            //   }
+            // })
+            //   .then(result => {
+            //     console.log(result);
+            //   })
+            // ;
           })
         ;
       },
@@ -160,7 +175,7 @@
                 properties: {
                   description: `
                 <h2>${ cabin.name }</h2>
-                <button id="btn-${ cabin.name }" class="go-to">${ me.$t('message.hello', { msg: 'hello' }) }</button>
+                <button id="btn-${ cabin.name }" class="go-to"><i class="v-icon material-icons theme--dark">directions</i> Itinéraire</button>
               `
                 },
                 geometry: {
@@ -225,7 +240,10 @@
               const point = {
                 type: 'Feature',
                 properties: {
-                  description: `${ helper.username }`
+                  description: `
+                    <h2>${ helper.username }</h2>
+                    <button id="btn-${ helper.username }" class="go-to">Contacter</button>
+                  `
                 },
                 geometry: {
                   type: 'Point',
@@ -324,20 +342,6 @@
             'icon-size': 0.3
           }
         });
-
-        me.axios({
-          method: 'POST',
-          url: `${ me.$baseUrl }/map/reverse-geocoding`,
-          data: {
-            locations: JSON.stringify([[me.longitude, me.latitude]]),
-            token: me.$accessToken,
-            url: JSON.stringify(me.$splitUrlMapBox)
-          }
-        })
-          .then(result => {
-            console.log(result);
-          })
-        ;
       }
     }
   }
@@ -379,6 +383,10 @@
       color: white;
       margin-top: 15px;
       padding: 5px 10px;
+
+      i {
+        font-size: 16px;
+      }
     }
 
     .mapboxgl-popup-close-button {

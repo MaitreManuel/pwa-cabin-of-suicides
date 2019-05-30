@@ -58,9 +58,9 @@
       return {
         drawer: false,
         items: [
-          { title: 'Home', icon: 'dashboard', page: 'login' },
           { title: 'Accueil', icon: 'dashboard', page: 'home' },
-          { title: 'About', icon: 'question_answer', page: 'about' }
+          { title: 'À propos', icon: 'question_answer', page: 'about' },
+          { title: 'Se connecter (helper)', icon: 'perm_identity', page: 'login' }
         ],
         right: null
       }
