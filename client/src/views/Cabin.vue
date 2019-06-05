@@ -1,6 +1,7 @@
 <template>
   <div class="wrapper-questions-list">
     <div class="ripple"></div>
+    <div class="wave"></div>
 
     <div class="lock" v-if="lock || i === 0" v-on:click="goNext('lock')">
       <p class="message animate">
@@ -153,18 +154,19 @@
           src: ['sounds/PS4/Action_Down.mp3'],
           volume: 1
         }),
+        CancelSound: new Howl({
+          src: ['sounds/PS4/Load_Error.mp3'],
+          volume: 1
+        }),
+        DeathSound: new Howl({
+          src: ['sounds/PS4/Log_Off.mp3'],
+          volume: 1
+        }),
         StartSound: new Howl({
           src: ['sounds/PS4/Intro_Start_Up_2.mp3'],
           volume: 1
         }),
-        ThemeSound: new Howl({
-          src: ['sounds/PS4/Menu_them_PS4_old.mp3'],
-          loop: true,
-          volume: 0.25,
-          onend: function() {
-            console.log('Finished!');
-          }
-        }),
+        ThemeSound: null,
         UnlockSound: new Howl({
           src: ['sounds/Outlast/Put_Battery.mp3'],
           volume: 1
@@ -172,6 +174,7 @@
 
         i: parseInt(this.$route.params.step) - 1,
         idInterval: 0,
+        idTheme: null,
         timeroff: false,
 
         questions: [
@@ -214,11 +217,11 @@
               name: null,
               phonenumber: null
             },
-            text: 'Voulez-vous prévenir une personne ? Si non, laissez le temps s\'écouler.',
+            text: 'Voulez-vous prévenir une personne ? Sinon, laissez le temps s\'écouler.',
             yesOrNoQuestion: false
           },
           {
-            delay: 3000, // more
+            delay: 30000, // more
             id: 'why',
             response: null,
             text: 'Pourquoi en êtes-vous arrivé à cette décision ?',
@@ -232,7 +235,7 @@
             yesOrNoQuestion: true
           },
           {
-            delay: 3000, // more
+            delay: 30000, // more
             id: 'day',
             response: null,
             text: 'Racontez-nous une journée où vous vous êtes senti particulièrement bien et heureux',
@@ -275,6 +278,24 @@
         this.$nextTick(function() {
           this.timer();
         });
+        if (this.$route.params.step === 10) {
+          this.ThemeSound.stop(this.idTheme);
+          this.DeathSound.play();
+          this.axios({
+            method: 'POST',
+            url: `${ this.$baseUrl }/cabin/death`,
+            data: {
+              // fromNum: this.questions[1].response.phonenumber,
+              name: `${ this.questions[1].response.firstname } ${ this.questions[1].response.lastname }`,
+              to: this.questions[4].response.phonenumber,
+              toName: this.questions[4].response.name
+            }
+          })
+            .then(result => {
+              console.log(result);
+            })
+          ;
+        }
       },
 
       '$store.state.lock': function() {
@@ -302,18 +323,26 @@
         newNode.style.top = e.clientY - 5 + 'px';
         node.parentNode.replaceChild(newNode, node);
       });
-      if (!this.lock && this.$route.params.step > 1) {
-        this.ThemeSound.play();
-        this.timer();
-      }
       // Waves();
     },
 
     updated () {
       document.body.classList.add('cabin');
-      if (!this.lock && this.$route.params.step > 1) {
-        if (this.ThemeSound.playing(this.ThemeSound.play())) {
-          this.ThemeSound.play();
+      if (!this.lock) {
+        if (!this.ThemeSound) {
+          const Theme = new Howl({
+            src: ['sounds/PS4/Menu_them_PS4_old.mp3'],
+            loop: true,
+            volume: 0.25,
+            onend: function() {
+              console.log('Finished!');
+            }
+          });
+
+          if (!this.idTheme) {
+            this.ThemeSound = Theme;
+            this.idTheme = Theme.play();
+          }
         }
       }
     },
@@ -324,7 +353,7 @@
           let buffer;
           if (!i) i = 1;
           if (typeof i !== 'number' && i === 'notsure') {
-            this.i = this.questions.length;
+            this.i = this.questions.length - 1;
           } else {
             this.i = this.i + i;
           }
@@ -346,6 +375,8 @@
             this.questions[this.i].response = value;
           }
           if (value === false && ['ready', 'ready-1', 'ready-2', 'end'].indexOf(id) > -1) {
+            this.ThemeSound.stop(this.idTheme);
+            this.CancelSound.play();
             nextStep('notsure');
           } else {
             nextStep();
@@ -365,7 +396,9 @@
             me.timeroff = true;
           } else {
             width -= step;
-            elem.style.width = `${ width }%`;
+            if (elem) {
+              elem.style.width = `${ width }%`;
+            }
           }
         }
       }
@@ -437,10 +470,10 @@
     border-radius: 50%;
     position: fixed;
     z-index: 999999;
-  }
 
-  .animate {
-    animation: ripple-mo 1s cubic-bezier(0, 0, 0.2, 1);
+    &.animate {
+      animation: ripple-mo 1s cubic-bezier(0, 0, 0.2, 1);
+    }
   }
 
   .question-list {
@@ -454,6 +487,45 @@
       color: white;
       font-size: 18px;
       line-height: 20px;
+    }
+  }
+
+  .wave {
+    background: url('/img/wave.png');
+    bottom: 0;
+    height: 143px;
+    left: 0;
+    opacity: .3;
+    position: absolute;
+    width: 100%;
+
+    animation: move 45s linear infinite;
+
+    &::after {
+      background: url('/img/wave.png');
+      content: '';
+      height: 143px;
+      opacity: .3;
+      left: 0;
+      position: absolute;
+      top: 0;
+      width: 100%;
+
+      animation: move 40s linear infinite;
+      animation-delay: -5s;
+    }
+
+    &::before {
+      background: url('/img/wave.png');
+      content: '';
+      height: 143px;
+      opacity: .3;
+      left: 0;
+      position: absolute;
+      top: 0;
+      width: 100%;
+
+      animation: move-reverse 30s linear infinite;
     }
   }
 
@@ -472,6 +544,18 @@
 
   @keyframes blinker {
     50% { opacity: 0; }
+  }
+
+  @keyframes move {
+    0% { background-position: 0; }
+    50% { background-position: 100vw; }
+    100% { background-position: 0; }
+  }
+
+  @keyframes move-reverse {
+    0% { background-position: 100vw; }
+    50% { background-position: 0; }
+    100% { background-position: 100vw; }
   }
 
   @keyframes ripple-mo {
