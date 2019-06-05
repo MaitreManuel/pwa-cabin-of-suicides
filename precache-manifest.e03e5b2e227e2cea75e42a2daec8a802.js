@@ -1,7 +1,7 @@
 self.__precacheManifest = [
   {
-    "revision": "99486b04bd17ecd964f8483bdeb2767d",
-    "url": "sounds/PS4/Load_Error.mp3"
+    "revision": "31596b858ce4f7c32b40a64bd2ac8da1",
+    "url": "sounds/PS4/Action_Select.mp3"
   },
   {
     "revision": "e5d3c6e81c171468b143922e7ebe520e",
@@ -40,16 +40,16 @@ self.__precacheManifest = [
     "url": "sounds/PS4/Log_Off.mp3"
   },
   {
-    "revision": "d7ea78b81d8fa71dab82",
-    "url": "js/app.8b3ed4a2.js"
+    "revision": "22efdc5af570d136df23",
+    "url": "js/app.504bcf29.js"
   },
   {
     "revision": "7277b3bc704d8c8a43586d737093b5d5",
     "url": "sounds/PS4/Action_Down.mp3"
   },
   {
-    "revision": "31596b858ce4f7c32b40a64bd2ac8da1",
-    "url": "sounds/PS4/Action_Select.mp3"
+    "revision": "99486b04bd17ecd964f8483bdeb2767d",
+    "url": "sounds/PS4/Load_Error.mp3"
   },
   {
     "revision": "a334fd64e1d9141b81fe28b568ceb41a",
@@ -64,28 +64,32 @@ self.__precacheManifest = [
     "url": "sounds/Outlast/Switch_On_Camera.mp3"
   },
   {
-    "revision": "b6216d61c03e6ce0c9aea6ca7808f7ca",
-    "url": "robots.txt"
-  },
-  {
     "revision": "5dc85c7ff0ac4254a4200a0cabf5036b",
     "url": "sounds/PS4/Action_Move.mp3"
   },
   {
-    "revision": "3816ba2d427ad9d24a64",
-    "url": "js/chunk-vendors.153b5e2a.js"
+    "revision": "b6216d61c03e6ce0c9aea6ca7808f7ca",
+    "url": "robots.txt"
   },
   {
     "revision": "71152b50fee7f3637128798ff2480888",
     "url": "sounds/Outlast/Put_Battery.mp3"
   },
   {
-    "revision": "3a331f8961a1787b3f104d5dfc1426c5",
-    "url": "fonts/SST-Bold-Italic.ttf"
+    "revision": "3816ba2d427ad9d24a64",
+    "url": "js/chunk-vendors.153b5e2a.js"
+  },
+  {
+    "revision": "b661c28b0f28606a96722ad2d9588b70",
+    "url": "fonts/MaterialIcons-Regular.b661c28b.eot"
   },
   {
     "revision": "b8fc9d96f846353cfb01a1264589a75a",
     "url": "img/cabin-taken.png"
+  },
+  {
+    "revision": "fe2b30cb8aa164e2b7216b41ff1612fe",
+    "url": "img/sync.svg"
   },
   {
     "revision": "1a7c2d99d55dec80efea6bb5c9960f10",
@@ -96,20 +100,20 @@ self.__precacheManifest = [
     "url": "img/helper.png"
   },
   {
+    "revision": "ef4cb463977c58bb8cbdd2b93b6c4af7",
+    "url": "img/wave.png"
+  },
+  {
     "revision": "6602a7acf89c6c5092ca018f0f5a2413",
     "url": "img/cabin.png"
   },
   {
-    "revision": "fe2b30cb8aa164e2b7216b41ff1612fe",
-    "url": "img/sync.svg"
-  },
-  {
-    "revision": "a66fbfaf5a3a2742bc744ad6c5857617",
+    "revision": "6c7fa31f113954f3f43aa71f1b5d0804",
     "url": "index.html"
   },
   {
-    "revision": "436390eb091d19924b4ca2aa3fd989d4",
-    "url": "fonts/SST-Condensed-Bold.ttf"
+    "revision": "2fc21bb2a758202c952acdf67f8d3be4",
+    "url": "fonts/SST-Heavy-Italic.ttf"
   },
   {
     "revision": "77a0ddf57e5308d1c2c6589e6f20ad55",
@@ -140,24 +144,24 @@ self.__precacheManifest = [
     "url": "fonts/SST-Ultra-Light.ttf"
   },
   {
-    "revision": "521ebae9bd1158ae614382d77d4280f8",
-    "url": "fonts/SST-Medium.ttf"
-  },
-  {
     "revision": "5976036e3c27d9608993f0638a102da6",
     "url": "fonts/SST-Medium-Italic.ttf"
   },
   {
-    "revision": "9219a80f0478e0bfdee5f4c753ce8535",
-    "url": "fonts/MaterialIcons-Regular.9219a80f.woff"
+    "revision": "521ebae9bd1158ae614382d77d4280f8",
+    "url": "fonts/SST-Medium.ttf"
   },
   {
-    "revision": "bca3a1873ac988faff0817eca96b2d86",
-    "url": "fonts/MaterialIcons-Regular.bca3a187.woff2"
+    "revision": "a63abed95dbb4802d6f9c711a8c4c418",
+    "url": "fonts/SST-Light-Italic.ttf"
   },
   {
-    "revision": "2fc21bb2a758202c952acdf67f8d3be4",
-    "url": "fonts/SST-Heavy-Italic.ttf"
+    "revision": "3a331f8961a1787b3f104d5dfc1426c5",
+    "url": "fonts/SST-Bold-Italic.ttf"
+  },
+  {
+    "revision": "436390eb091d19924b4ca2aa3fd989d4",
+    "url": "fonts/SST-Condensed-Bold.ttf"
   },
   {
     "revision": "072039b80b46f7d5d4d40f2bd8b81200",
@@ -176,16 +180,16 @@ self.__precacheManifest = [
     "url": "fonts/SST-Bold.ttf"
   },
   {
-    "revision": "a63abed95dbb4802d6f9c711a8c4c418",
-    "url": "fonts/SST-Light-Italic.ttf"
-  },
-  {
     "revision": "64f42be7b4d097a3807fab68c42f2b33",
     "url": "fonts/SST-Condensed-Medium.ttf"
   },
   {
-    "revision": "b661c28b0f28606a96722ad2d9588b70",
-    "url": "fonts/MaterialIcons-Regular.b661c28b.eot"
+    "revision": "bca3a1873ac988faff0817eca96b2d86",
+    "url": "fonts/MaterialIcons-Regular.bca3a187.woff2"
+  },
+  {
+    "revision": "9219a80f0478e0bfdee5f4c753ce8535",
+    "url": "fonts/MaterialIcons-Regular.9219a80f.woff"
   },
   {
     "revision": "586090b38a233ce0201fb221eb117a36",
@@ -196,7 +200,7 @@ self.__precacheManifest = [
     "url": "css/chunk-vendors.c30706a0.css"
   },
   {
-    "revision": "d7ea78b81d8fa71dab82",
-    "url": "css/app.abe1c121.css"
+    "revision": "22efdc5af570d136df23",
+    "url": "css/app.02392231.css"
   }
 ];
