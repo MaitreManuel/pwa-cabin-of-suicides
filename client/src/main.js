@@ -15,8 +15,8 @@ import './plugins/registerServiceWorker';
 Vue.config.productionTip = false;
 
 Vue.prototype.$accessToken = 'pk.eyJ1IjoibWFpdHJlbWFudWVsIiwiYSI6ImNqdWUwOXB5czByOWg0NHA5emhzajg0MXoifQ.wmKWlpczXU1SVDUCA8GMbA';
-Vue.prototype.$baseUrl = 'http://localhost:5000';
-// Vue.prototype.$baseUrl = 'https://cabin-of-suicides.herokuapp.com';
+// Vue.prototype.$baseUrl = 'http://localhost:5000';
+Vue.prototype.$baseUrl = 'https://cabin-of-suicides.herokuapp.com';
 Vue.prototype.$direction = (ownPosition, toGoPosition) => {
   return `https://api.mapbox.com/directions/v5/mapbox/walking/${ ownPosition.longitude }%2C${ ownPosition.latitude }%3B${ toGoPosition.longitude }%2C${ toGoPosition.latitude }.json?access_token=${ Vue.prototype.$accessToken }&overview=full&geometries=geojson`
 };
