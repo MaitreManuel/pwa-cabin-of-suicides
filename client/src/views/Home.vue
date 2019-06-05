@@ -63,7 +63,7 @@
     mounted() {
       require('mapbox-gl/dist/mapbox-gl.css');
       this.mbgl = require('mapbox-gl');
-      this.initMap();
+      this.setMap();
     },
 
     methods: {
@@ -99,7 +99,24 @@
         document.querySelector('.mapboxgl-ctrl-geolocate').click();
       },
 
-      initMap() {
+      openCabin(id) {
+        const me = this;
+
+        me.axios({
+          method: 'POST',
+          url: `${ me.$baseUrl }/cabin/lock`,
+          data: {
+            id: id,
+            date: new Date().getTime()
+          }
+        })
+          .then(result => {
+            console.log(result);
+          })
+        ;
+      },
+
+      setMap() {
         const me = this;
         const GeolocateControl = new me.mbgl.GeolocateControl({
           fitBoundsOptions: {
@@ -173,9 +190,14 @@
               const point = {
                 type: 'Feature',
                 properties: {
-                  description: `
+                  description: !cabin.isTaken.status ? `
                 <h2>${ cabin.name }</h2>
                 <button id="btn-${ cabin.name }" class="go-to"><i class="v-icon material-icons theme--dark">directions</i> Itinéraire</button>
+                <br />
+                <button id="btn-${ cabin.name }-open" class="open-cabin"><i class="v-icon material-icons theme--dark">lock_open</i> Ouvrir</button>
+              ` : `
+                <h2>${ cabin.name }</h2>
+                <p>Cette cabine est occupée</p>
               `
                 },
                 geometry: {
@@ -218,7 +240,11 @@
                 ;
 
                 document.querySelector(`#btn-${ cabin.name }`).addEventListener('click', () => {
-                  me.drawPath(cabin.location);
+                  me.drawPath(cabin._id);
+                });
+
+                document.querySelector(`#btn-${ cabin.name }-open`).addEventListener('click', () => {
+                  me.openCabin(cabin._id);
                 });
 
                 me.map.flyTo({ center: e.features[0].geometry.coordinates, zoom: 17 });
@@ -378,7 +404,7 @@
     padding: 15px 10px !important;
     text-align: center;
 
-    .go-to {
+    .go-to, .open-cabin {
       background: #212121;
       color: white;
       margin-top: 15px;

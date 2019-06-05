@@ -10,7 +10,8 @@ const store = new Vuex.Store({
   state: {
     cabins: null,
     helpers: null,
-    lang: null
+    lang: null,
+    lock: true
   },
 
   actions: {
@@ -57,6 +58,10 @@ const store = new Vuex.Store({
 
     SET_LANG(state, lang) {
       state.lang = lang;
+    },
+
+    SET_LOCK(state, lock) {
+      state.lock = lock;
     }
   }
 });

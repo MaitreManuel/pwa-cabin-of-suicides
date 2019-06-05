@@ -14,7 +14,8 @@ module.exports = app => {
           res.send(result);
         })
       ;
-    });
+    })
+  ;
 
   app.use('/map', MapRouter);
 };

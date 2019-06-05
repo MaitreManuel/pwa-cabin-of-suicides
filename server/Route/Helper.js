@@ -11,7 +11,8 @@ module.exports = app => {
           result.length < 1 ? res.status(418).send({ 'message': 'Aucun résultat' }) : res.send(result);
         }
       });
-    });
+    })
+  ;
 
   app.use('/helper', HelperRouter);
 };
