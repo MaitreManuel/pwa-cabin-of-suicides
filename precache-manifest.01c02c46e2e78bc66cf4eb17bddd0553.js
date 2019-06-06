@@ -40,8 +40,8 @@ self.__precacheManifest = [
     "url": "sounds/PS4/Log_Off.mp3"
   },
   {
-    "revision": "222077bff20e347d78fd",
-    "url": "js/app.3b853699.js"
+    "revision": "c017e90008d9eacff946",
+    "url": "js/app.c0d497f4.js"
   },
   {
     "revision": "d634e4875d3abde6e7c30f7a56c9c82e",
@@ -108,7 +108,7 @@ self.__precacheManifest = [
     "url": "img/sync.svg"
   },
   {
-    "revision": "1d1bd131dff3267ec2544c8de7b9dab2",
+    "revision": "17602c30e4323502a887e475c3c39bdb",
     "url": "index.html"
   },
   {
@@ -152,16 +152,16 @@ self.__precacheManifest = [
     "url": "fonts/SST-Medium-Italic.ttf"
   },
   {
-    "revision": "9219a80f0478e0bfdee5f4c753ce8535",
-    "url": "fonts/MaterialIcons-Regular.9219a80f.woff"
+    "revision": "a63abed95dbb4802d6f9c711a8c4c418",
+    "url": "fonts/SST-Light-Italic.ttf"
   },
   {
     "revision": "77a0ddf57e5308d1c2c6589e6f20ad55",
     "url": "fonts/SST-Light.77a0ddf5.ttf"
   },
   {
-    "revision": "a63abed95dbb4802d6f9c711a8c4c418",
-    "url": "fonts/SST-Light-Italic.ttf"
+    "revision": "9219a80f0478e0bfdee5f4c753ce8535",
+    "url": "fonts/MaterialIcons-Regular.9219a80f.woff"
   },
   {
     "revision": "3a331f8961a1787b3f104d5dfc1426c5",
@@ -204,7 +204,7 @@ self.__precacheManifest = [
     "url": "css/chunk-vendors.c30706a0.css"
   },
   {
-    "revision": "222077bff20e347d78fd",
-    "url": "css/app.57d9f029.css"
+    "revision": "c017e90008d9eacff946",
+    "url": "css/app.067b376b.css"
   }
 ];
