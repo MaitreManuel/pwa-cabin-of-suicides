@@ -56,7 +56,7 @@
               <v-flex xs4 offset-xs1>
                 <v-text-field
                   v-model="questions[i].response.name"
-                  label="Nom Prénom"
+                  label="Prénom Nom"
                   autocomplete="new-password"
                   required
                 ></v-text-field>
@@ -217,7 +217,7 @@
               name: null,
               phonenumber: null
             },
-            text: 'Voulez-vous prévenir une personne ? Sinon, laissez le temps s\'écouler.',
+            text: 'Nous avons besoin d\'une personne à contacter à la fin du processus, veuillez entrer ses coordonnées',
             yesOrNoQuestion: false
           },
           {

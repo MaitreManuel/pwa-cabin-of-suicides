@@ -3,6 +3,7 @@ import Router from 'vue-router';
 
 import Home from '../views/Home.vue';
 import Cabin from '../views/Cabin.vue';
+import Step from '../views/Step.vue';
 
 Vue.use(Router);
 
@@ -25,6 +26,11 @@ export default new Router({
       path: '/cabin/:step',
       name: 'cabin',
       component: Cabin
+    },
+    {
+      path: '/step/:step',
+      name: 'step',
+      component: Step
     }
   ]
 })
