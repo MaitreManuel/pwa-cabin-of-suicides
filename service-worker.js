@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/3.6.3/workbox-sw.js");
 
 importScripts(
-  "precache-manifest.d773cea77a684258e0c85d216fc44d01.js"
+  "precache-manifest.51cbc9099c2d6bb951a248370e212846.js"
 );
 
 workbox.core.setCacheNameDetails({prefix: "pwa-cabin-of-suicides"});

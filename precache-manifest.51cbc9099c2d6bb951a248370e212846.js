@@ -40,8 +40,8 @@ self.__precacheManifest = [
     "url": "sounds/PS4/Log_Off.mp3"
   },
   {
-    "revision": "6081d2e92fbe65851699",
-    "url": "js/app.a2d24c15.js"
+    "revision": "dee6969db35f16e38734",
+    "url": "js/app.1338c8a3.js"
   },
   {
     "revision": "d634e4875d3abde6e7c30f7a56c9c82e",
@@ -108,7 +108,7 @@ self.__precacheManifest = [
     "url": "img/sync.svg"
   },
   {
-    "revision": "689c85a4a5256210c9872d78d4dc9ef0",
+    "revision": "a9368cc0872f990684ba0de33a2d66c4",
     "url": "index.html"
   },
   {
@@ -144,12 +144,12 @@ self.__precacheManifest = [
     "url": "fonts/SST-Typewriter.ttf"
   },
   {
-    "revision": "521ebae9bd1158ae614382d77d4280f8",
-    "url": "fonts/SST-Medium.ttf"
-  },
-  {
     "revision": "5976036e3c27d9608993f0638a102da6",
     "url": "fonts/SST-Medium-Italic.ttf"
+  },
+  {
+    "revision": "521ebae9bd1158ae614382d77d4280f8",
+    "url": "fonts/SST-Medium.ttf"
   },
   {
     "revision": "a63abed95dbb4802d6f9c711a8c4c418",
@@ -204,7 +204,7 @@ self.__precacheManifest = [
     "url": "css/chunk-vendors.c30706a0.css"
   },
   {
-    "revision": "6081d2e92fbe65851699",
-    "url": "css/app.53b5d9bd.css"
+    "revision": "dee6969db35f16e38734",
+    "url": "css/app.96f1f335.css"
   }
 ];
