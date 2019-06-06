@@ -26,6 +26,10 @@
           },
           {
             icon: 'arrow_forward',
+            text: 'Votre itinéraire est prêt, appuyez sur suivant pour commencer',
+          },
+          {
+            icon: 'arrow_forward',
             text: 'Tournez à <span class="bold">droite</span>',
           },
           {
