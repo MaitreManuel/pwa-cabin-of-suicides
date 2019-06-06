@@ -472,7 +472,7 @@
     z-index: 999999;
 
     &.animate {
-      animation: ripple-mo 1s cubic-bezier(0, 0, 0.2, 1);
+      animation: ripple-mo 1s cubic-bezier(0, 0, .2, 1);
     }
   }
 
