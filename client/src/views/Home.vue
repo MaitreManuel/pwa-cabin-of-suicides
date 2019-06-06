@@ -193,8 +193,6 @@
                   description: !cabin.isTaken.status ? `
                 <h2>${ cabin.name }</h2>
                 <button id="btn-${ cabin.name }" class="go-to"><i class="v-icon material-icons theme--dark">directions</i> Itinéraire</button>
-                <br />
-                <button id="btn-${ cabin.name }-open" class="open-cabin"><i class="v-icon material-icons theme--dark">lock_open</i> Ouvrir</button>
               ` : `
                 <h2>${ cabin.name }</h2>
                 <p>Cette cabine est occupée</p>
@@ -240,12 +238,16 @@
                 ;
 
                 document.querySelector(`#btn-${ cabin.name }`).addEventListener('click', () => {
-                  me.drawPath(cabin._id);
+                  me.drawPath(cabin.location);
+                  localStorage.setItem('idCabin', cabin._id);
+                  setTimeout(() => {
+                    me.$router.push({ name: 'step', params: { step: 1 }});
+                  }, 1500);
                 });
 
-                document.querySelector(`#btn-${ cabin.name }-open`).addEventListener('click', () => {
-                  me.openCabin(cabin._id);
-                });
+                // document.querySelector(`#btn-${ cabin.name }-open`).addEventListener('click', () => {
+                //   me.openCabin(cabin._id);
+                // });
 
                 me.map.flyTo({ center: e.features[0].geometry.coordinates, zoom: 17 });
               });

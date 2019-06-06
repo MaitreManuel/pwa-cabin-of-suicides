@@ -1,29 +1,28 @@
 # pwa-cabin-of-suicides
 
-## Project setup
+## Installation front
 ```
-npm install
-```
-
-### Compiles and hot-reloads for development
-```
-npm run serve
+cd client && npm i
 ```
 
-### Compiles and minifies for production
+## Installation back
 ```
-npm run build
-```
-
-### Run your tests
-```
-npm run test
+cd server && npm i
 ```
 
-### Lints and fixes files
+Copier le `.env.dist` en `.env`.
+
+Pour certains paramètres, me contacter.
+
+## Lancement dev front
 ```
-npm run lint
+cd client && npm start
 ```
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+## Lancement dev back
+```
+cd server && npm run start:dev
+
+# si erreur sur le port 5000 car déjà en écoute
+cd server && npm run start:dev:kill
+```
