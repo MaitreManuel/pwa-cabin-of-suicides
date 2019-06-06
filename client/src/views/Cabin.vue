@@ -491,7 +491,7 @@
   }
 
   .wave {
-    background: url('/img/wave.png');
+    background: url('../../public/img/wave.png');
     bottom: 0;
     height: 143px;
     left: 0;
@@ -502,7 +502,7 @@
     animation: move 45s linear infinite;
 
     &::after {
-      background: url('/img/wave.png');
+      background: url('../../public/img/wave.png');
       content: '';
       height: 143px;
       opacity: .3;
@@ -516,7 +516,7 @@
     }
 
     &::before {
-      background: url('/img/wave.png');
+      background: url('../../public/img/wave.png');
       content: '';
       height: 143px;
       opacity: .3;
