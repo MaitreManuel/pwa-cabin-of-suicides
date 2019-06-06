@@ -21,12 +21,12 @@
         i: parseInt(this.$route.params.step) - 1,
         steps: [
           {
-            icon: 'arrow_forward',
-            text: 'Dans <span class="bold">200m</span>, tournez à <span class="bold">droite</span>',
+            icon: 'location_on',
+            text: 'Votre itinéraire est prêt, appuyez sur suivant pour commencer',
           },
           {
             icon: 'arrow_forward',
-            text: 'Votre itinéraire est prêt, appuyez sur suivant pour commencer',
+            text: 'Dans <span class="bold">200m</span>, tournez à <span class="bold">droite</span>',
           },
           {
             icon: 'arrow_forward',
